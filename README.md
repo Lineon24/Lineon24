@@ -80,12 +80,31 @@ OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 �
 
 | Project | What I Built | Tech & Result |
 | --- | --- | --- |
+| [**AION**](https://github.com/Lineon24/AION-NIDS-Service) | 5초 단위 통계 트래픽과 직접 설계한 41개 특징으로 네트워크 공격을 탐지하는 시스템 | `Python` `FastAPI` `XGBoost` `Pandas` · 자체 테스트셋 정확도 100% |
+| [**피티스푼**](https://github.com/Lineon24/PTspoon) | 서비스 DB의 식당 후보를 답변 근거로 제공하는 2단계 AI 파이프라인과 맛집 커뮤니티 | `Next.js` `TypeScript` `Supabase` `OpenAI` `Redis` |
 | [**StoryWeaver AI**](https://github.com/Lineon24/StoryWeaver) | 캐릭터·세계관·관계·이전 장면을 조회하는 6개 Tool과 작가·검수 Agent를 연결한 대본 생성 서비스 | `LangChain` `Next.js` `TypeScript` `Python` `Zod` `Pydantic` · [Live Demo](https://storyweaver-ten.vercel.app) |
 | [**ReviQ**](https://github.com/Lineon24/ReviQ) | 팀 프로젝트에서 맡은 AI를 웹으로 단독 확장, 3-Agent 보고서 생성과 보고서 기반 후속 채팅 분리 | `Python` `FastAPI` `CrewAI` `Next.js` `IndexedDB` |
 | [**NYC Taxi Fare Pipeline**](https://github.com/Lineon24/taxi_amount_analysis_pipeline) | 팀 프로젝트에서 OOF 타깃 인코딩과 최종 XGBoost 모델 구현, 요금제별 오차 분석 | `Python` `Polars` `scikit-learn` `XGBoost` · 제출 보고서 MAE $2.6978, R² 0.9057 |
-| [**AION**](https://github.com/Lineon24/AION-NIDS-Service) | 5초 단위 통계 트래픽과 직접 설계한 41개 특징으로 네트워크 공격을 탐지하는 시스템 | `Python` `FastAPI` `XGBoost` `Pandas` · 자체 테스트셋 정확도 100% |
-| [**피티스푼**](https://github.com/Lineon24/PTspoon) | 서비스 DB의 식당 후보를 답변 근거로 제공하는 2단계 AI 파이프라인과 맛집 커뮤니티 | `Next.js` `TypeScript` `Supabase` `OpenAI` `Redis` |
 | [**WearCast**](https://github.com/Lineon24/WearCast) | 선택 지역의 실제 날씨를 근거로 옷차림을 추천하는 스트리밍 AI 챗봇 | `Vue 3` `Pinia` `Express` `OpenAI` `Vercel` |
+| [**Hash Cash GPU**](https://github.com/Lineon24/HashCash_gpu) | SHA-256 조건을 만족하는 nonce를 CUDA로 병렬 탐색하고 작업 구간·결과를 기록 | `C++` `CUDA` `SHA-256` · 과제 최고 난이도 12 달성 |
+
+### AION — 5초 통계 트래픽 기반 공격 탐지
+
+팀장으로 시스템 아키텍처와 JSON 인터페이스를 설계하고, 데이터 수집기·학습 데이터셋·XGBoost 모델·FastAPI 분석 서버를 담당했습니다.
+
+- 단일 플로우 분류의 한계를 분석하고, 5초 동안의 트래픽 규모·비율·다양성·지속성을 표현하는 41개 특징을 설계했습니다.
+- 가상 환경에서 정상·공격 트래픽을 직접 수집하고, 오분류 샘플의 라벨과 반사 트래픽을 점검해 데이터 품질을 개선했습니다.
+- API 키 원문을 DB에 저장하지 않고 서버에서 재계산해 검증하는 인증 구조를 설계했습니다. 팀원이 개발한 웹·분석기와 연동해 탐지 이력과 시각화로 연결했습니다.
+- 자체 구축 데이터의 테스트셋 6,095건에서 정확도 100%를 기록했습니다. 이는 해당 테스트셋 결과이며 실제 운영 환경 전체의 탐지 성능을 보장하지 않습니다.
+
+### 피티스푼 — 사용자 피드백으로 개선한 AI 맛집 커뮤니티
+
+팀장으로 프로젝트를 이끌며 AI 추천, 식당 데이터 구축 자동화와 핵심 서비스 기능을 개발했습니다. 공모전 이후 일반 사용자에게 공개하고 설문·피드백을 다음 개발에 반영했습니다.
+
+- 사용자 의도와 제외 조건을 구조화한 뒤 DB의 식당 후보를 검색하고, 후보를 두 번째 AI의 답변 근거로 제공하도록 설계했습니다.
+- 크롤링 → AI 맛 특징·종류 태깅 → DB 적재 흐름을 자동화해 지역 식당 데이터를 확장했습니다.
+- 식당·게시글 공유 기능을 구현하고, 팀과 함께 거리 표시·태그 필터·점주 홍보 기능을 보강했습니다.
+- Upstash Redis로 AI 요청 횟수 제한과 TTL 기반 차단 로직을 구현한 경험이 있습니다. 사용자 피드백을 반영한 개선 버전으로 TEAM UP! LIS Project 최우수상을 받았습니다.
 
 ### StoryWeaver AI — 설정 조회와 독립 검수
 
@@ -113,6 +132,24 @@ Python 노트북의 LangChain 설계를 Next.js 웹 서비스로 확장한 개�
 - 날짜 기준 학습·테스트 분리 평가에서 제출 보고서 기준 MAE **$2.6978**, R² **0.9057**, ±$5 이내 예측 비율 **85.89%**를 기록했습니다.
 - 요금제별 오차와 특징 중요도로 후속 개선 대상을 정리했습니다. 별도 실행 산출물의 지표는 제출 성과와 구분합니다.
 - 실제 운행거리 기반 오프라인 평가이므로 출발 전 적용에는 예상 거리로 재평가가 필요하며, Fold별 평활화 기준값 분리도 남은 개선점입니다.
+
+### WearCast — 지역별 실제 날씨를 반영하는 AI 챗봇
+
+여러 지역의 날씨 대시보드와 옷차림 추천을 연결하고, 선택 지역을 데이터와 대화 상태의 공통 기준으로 사용했습니다.
+
+- OpenWeatherMap·Open-Meteo의 기온·강수·풍속·자외선 정보를 AI 컨텍스트로 전달했습니다.
+- Pinia·localStorage로 지역별 대화를 분리하고 날씨 조회·즐겨찾기·예보 화면을 구성했습니다.
+- Vercel Edge 환경에서 표준 `fetch`·`ReadableStream`·SSE 처리로 스트리밍 답변을 구현하고 API 키는 서버에서 관리했습니다.
+- 좌표 반올림 대신 하버사인 거리로 5km 이내 지역 중복을 판정하고, 한글 조합 중 Enter 입력 문제를 처리했습니다.
+
+### Hash Cash GPU — CUDA 병렬 탐색과 결과 검증
+
+고정 메시지와 nonce를 결합한 SHA-256 해시에서 앞부분의 16진수 0 개수가 목표 난이도를 만족하는 값을 찾는 과제입니다.
+
+- C++·CUDA로 SHA-256 계산을 구현하고, 스레드별 시작점과 stride를 나눠 탐색 구간이 겹치지 않도록 구성했습니다.
+- `atomicCAS`로 최초 발견 결과를 저장하고, 작업 구간·완료 기록·실행 로그를 파일로 관리했습니다. 중단 시 처리 중이던 구간은 다시 탐색합니다.
+- 과제에서 최고 난이도 12를 달성했으며, 별도의 Python 검증기로 발견한 nonce의 해시 조건을 확인했습니다.
+- 공개 코드의 기본값은 이후 난이도 13 탐색 설정입니다. 난이도 12 달성 기록과 후속 탐색 코드를 구분하며 GPU 속도 향상 배수는 주장하지 않습니다.
 
 ## How I Work
 
