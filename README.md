@@ -5,7 +5,7 @@
 **데이터와 AI를 실제 사용자가 쓰는 서비스로 연결합니다.**
 
 모델을 호출하는 데서 끝내지 않고 데이터 수집, 모델링, API, 웹 서비스와 배포까지 직접 연결해 왔습니다.  
-OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 생성, 리뷰 분석·보고서 자동화 서비스를 개발했습니다.
+병원별 RAG·다국어 상담, OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 생성, 리뷰 분석·보고서 자동화 서비스를 개발했습니다.
 
 현재 **SKALA(SK AI Leader Academy)**에서 AI·데이터 엔지니어링 역량을 확장하고 있습니다.
 
@@ -30,6 +30,8 @@ OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 �
 ![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)
 ![OpenAI API](https://img.shields.io/badge/OpenAI_API-412991?style=flat-square&logo=openai&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=langchain&logoColor=white)
+![LangGraph](https://img.shields.io/badge/LangGraph-1C3C3C?style=flat-square&logo=langgraph&logoColor=white)
+![FastMCP](https://img.shields.io/badge/FastMCP-0066FF?style=flat-square)
 ![CrewAI](https://img.shields.io/badge/CrewAI-FF5A50?style=flat-square&logoColor=white)
 ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white)
 
@@ -38,6 +40,8 @@ OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 �
 - K-Fold OOF 타깃 인코딩, 데이터 누수 위험 점검, 시간 기준 검증
 - 서비스 DB와 실시간 외부 데이터를 활용한 LLM 그라운딩
 - LangChain Tool·Structured Output과 작가·검수 Agent 설계
+- LangGraph 기반 상담 주제·조건 유지, MCP 업무 도구 연동과 사용자 승인 흐름
+- 병원 ID로 검색 범위를 제한하는 pgvector RAG·문서 청킹·임베딩 파이프라인
 - CrewAI 순차 분석, 보고서 재사용 기반 채팅, Pydantic·Zod 검증
 
 ### Backend · API
@@ -68,6 +72,7 @@ OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 �
 ### Database · Infrastructure · Tools
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![pgvector](https://img.shields.io/badge/pgvector-4169E1?style=flat-square)
 ![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat-square&logo=supabase&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white)
@@ -81,12 +86,13 @@ OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 �
 | Project | What I Built | Tech & Result |
 | --- | --- | --- |
 | [**AION**](https://github.com/Lineon24/AION-NIDS-Service) | 5초 단위 통계 트래픽과 직접 설계한 41개 특징으로 네트워크 공격을 탐지하는 시스템 | `Python` `FastAPI` `XGBoost` `Pandas` · 자체 테스트셋 정확도 100% |
+| [**여신 Yeoshin**](https://github.com/Lineon24/Yeoshin-ai-concierg) | 6인 팀에서 메인·병원 Agent, 병원별 RAG MCP·리뷰 조회 도구 개발, 응답 처리 단계 축소와 상담 승인 흐름 개선 | `Python` `LangGraph` `FastMCP` `pgvector` · [시연 영상](https://www.youtube.com/watch?v=Jh-rIKw4PNs) |
 | [**피티스푼**](https://github.com/Lineon24/PTspoon) | 서비스 DB의 식당 후보를 답변 근거로 제공하는 2단계 AI 파이프라인과 맛집 커뮤니티 | `Next.js` `TypeScript` `Supabase` `OpenAI` `Redis` |
 | [**StoryWeaver AI**](https://github.com/Lineon24/StoryWeaver) | 캐릭터·세계관·관계·이전 장면을 조회하는 6개 Tool과 작가·검수 Agent를 연결한 대본 생성 서비스 | `LangChain` `Next.js` `TypeScript` `Python` `Zod` `Pydantic` · [Live Demo](https://storyweaver-ten.vercel.app) |
 | [**ReviQ**](https://github.com/Lineon24/ReviQ) | 팀 프로젝트에서 맡은 AI를 웹으로 단독 확장, 3-Agent 보고서 생성과 보고서 기반 후속 채팅 분리 | `Python` `FastAPI` `CrewAI` `Next.js` `IndexedDB` |
 | [**NYC Taxi Fare Pipeline**](https://github.com/Lineon24/taxi_amount_analysis_pipeline) | 팀 프로젝트에서 OOF 타깃 인코딩과 최종 XGBoost 모델 구현, 요금제별 오차 분석 | `Python` `Polars` `scikit-learn` `XGBoost` · 제출 보고서 MAE $2.6978, R² 0.9057 |
-| [**WearCast**](https://github.com/Lineon24/WearCast) | 선택 지역의 실제 날씨를 근거로 옷차림을 추천하는 스트리밍 AI 챗봇 | `Vue 3` `Pinia` `Express` `OpenAI` `Vercel` |
 | [**Hash Cash GPU**](https://github.com/Lineon24/HashCash_gpu) | SHA-256 조건을 만족하는 nonce를 CUDA로 병렬 탐색하고 작업 구간·결과를 기록 | `C++` `CUDA` `SHA-256` · 과제 최고 난이도 12 달성 |
+| [**WearCast**](https://github.com/Lineon24/WearCast) | 선택 지역의 실제 날씨를 근거로 옷차림을 추천하는 스트리밍 AI 챗봇 | `Vue 3` `Pinia` `Express` `OpenAI` `Vercel` |
 
 ### AION — 5초 통계 트래픽 기반 공격 탐지
 
@@ -96,6 +102,17 @@ OOF 타깃 인코딩 기반 요금 예측, 작가·검수 Agent 기반 대본 �
 - 가상 환경에서 정상·공격 트래픽을 직접 수집하고, 오분류 샘플의 라벨과 반사 트래픽을 점검해 데이터 품질을 개선했습니다.
 - API 키 원문을 DB에 저장하지 않고 서버에서 재계산해 검증하는 인증 구조를 설계했습니다. 팀원이 개발한 웹·분석기와 연동해 탐지 이력과 시각화로 연결했습니다.
 - 자체 구축 데이터의 테스트셋 6,095건에서 정확도 100%를 기록했습니다. 이는 해당 테스트셋 결과이며 실제 운영 환경 전체의 탐지 성능을 보장하지 않습니다.
+
+### 여신 Yeoshin — 병원별 RAG와 다국어 상담 Agent
+
+2026.10, 외국인 환자의 모국어 상담부터 병원 탐색·예약까지 연결한 6인 팀 프로젝트입니다. 전체 Agent 아키텍처 설계에 참여하고 메인·병원 Agent와 병원별 RAG MCP를 개발했습니다.
+
+- **병원별 RAG:** 상담방의 `hospital_id`를 도구 호출과 검색 SQL에 적용해 현재 병원·공통 문서만 검색하도록 설계했습니다. 문서 청킹·임베딩·pgvector 검색과 변경 문서 재색인을 구현했습니다.
+- **메인 Agent:** 9개 상담 주제와 기존 조건을 유지하고, 사용자의 병원 탐색 요청에 따라 흐름을 전환합니다. 실제 DB에서 조회한 유사 시술 후보를 제시하고 사용자 선택 후 검색을 이어가도록 했습니다.
+- **응답 성능:** 프롬프트를 축약하고 별도 답변 검토 AI·불필요한 `verify` 노드를 제거했습니다. 정해진 첫 질문은 모델 호출 없이 처리해 추가 처리 단계를 줄였습니다.
+- **업무 연동:** Business MCP의 병원 리뷰 조회를 확장하고, 상담 요약 승인 폼·재진입 복원과 예약 날짜·가격 검증을 보완했습니다.
+
+[팀 저장소·기여 기록](https://github.com/skala-group-1/skala-team1-capstone#team) · [아키텍처](https://github.com/skala-group-1/skala-team1-capstone#architecture) · [주요 화면](https://github.com/skala-group-1/skala-team1-capstone#features) · [전체 데모](https://www.youtube.com/watch?v=Jh-rIKw4PNs)
 
 ### 피티스푼 — 사용자 피드백으로 개선한 AI 맛집 커뮤니티
 
@@ -133,15 +150,6 @@ Python 노트북의 LangChain 설계를 Next.js 웹 서비스로 확장한 개�
 - 요금제별 오차와 특징 중요도로 후속 개선 대상을 정리했습니다. 별도 실행 산출물의 지표는 제출 성과와 구분합니다.
 - 실제 운행거리 기반 오프라인 평가이므로 출발 전 적용에는 예상 거리로 재평가가 필요하며, Fold별 평활화 기준값 분리도 남은 개선점입니다.
 
-### WearCast — 지역별 실제 날씨를 반영하는 AI 챗봇
-
-여러 지역의 날씨 대시보드와 옷차림 추천을 연결하고, 선택 지역을 데이터와 대화 상태의 공통 기준으로 사용했습니다.
-
-- OpenWeatherMap·Open-Meteo의 기온·강수·풍속·자외선 정보를 AI 컨텍스트로 전달했습니다.
-- Pinia·localStorage로 지역별 대화를 분리하고 날씨 조회·즐겨찾기·예보 화면을 구성했습니다.
-- Vercel Edge 환경에서 표준 `fetch`·`ReadableStream`·SSE 처리로 스트리밍 답변을 구현하고 API 키는 서버에서 관리했습니다.
-- 좌표 반올림 대신 하버사인 거리로 5km 이내 지역 중복을 판정하고, 한글 조합 중 Enter 입력 문제를 처리했습니다.
-
 ### Hash Cash GPU — CUDA 병렬 탐색과 결과 검증
 
 고정 메시지와 nonce를 결합한 SHA-256 해시에서 앞부분의 16진수 0 개수가 목표 난이도를 만족하는 값을 찾는 과제입니다.
@@ -151,11 +159,20 @@ Python 노트북의 LangChain 설계를 Next.js 웹 서비스로 확장한 개�
 - 과제에서 최고 난이도 12를 달성했으며, 별도의 Python 검증기로 발견한 nonce의 해시 조건을 확인했습니다.
 - 공개 코드의 기본값은 이후 난이도 13 탐색 설정입니다. 난이도 12 달성 기록과 후속 탐색 코드를 구분하며 GPU 속도 향상 배수는 주장하지 않습니다.
 
+### WearCast — 지역별 실제 날씨를 반영하는 AI 챗봇
+
+여러 지역의 날씨 대시보드와 옷차림 추천을 연결하고, 선택 지역을 데이터와 대화 상태의 공통 기준으로 사용했습니다.
+
+- OpenWeatherMap·Open-Meteo의 기온·강수·풍속·자외선 정보를 AI 컨텍스트로 전달했습니다.
+- Pinia·localStorage로 지역별 대화를 분리하고 날씨 조회·즐겨찾기·예보 화면을 구성했습니다.
+- Vercel Edge 환경에서 표준 `fetch`·`ReadableStream`·SSE 처리로 스트리밍 답변을 구현하고 API 키는 서버에서 관리했습니다.
+- 좌표 반올림 대신 하버사인 거리로 5km 이내 지역 중복을 판정하고, 한글 조합 중 Enter 입력 문제를 처리했습니다.
+
 ## How I Work
 
 - **Problem Framing:** AION의 분석 단위를 단일 플로우에서 5초 통계 트래픽으로 다시 정의했습니다.
 - **Reliable AI:** LLM이 서비스 DB와 최신 외부 데이터 안에서 답하도록 컨텍스트와 제약을 설계합니다.
-- **Agent Workflow:** StoryWeaver는 작성·검수를, ReviQ는 3단계 분석과 후속 대화를 분리해 작업 목적에 맞는 실행 흐름을 설계했습니다.
+- **Agent Workflow:** 여신은 상담 주제·조건을 유지하고 업무 도구·사용자 승인으로 연결했습니다. StoryWeaver는 작성·검수를, ReviQ는 3단계 분석과 후속 대화를 분리해 작업 목적에 맞는 실행 흐름을 설계했습니다.
 - **Reproducible ML:** 데이터 누수 방지, 베이스라인 비교, 오분류 분석과 재현 가능한 파이프라인을 중요하게 생각합니다.
 - **Product Iteration:** 공모전 발표에 머무르지 않고 실제 배포와 사용자 피드백을 다음 개발 우선순위로 연결합니다.
 
