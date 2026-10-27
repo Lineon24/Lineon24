@@ -86,7 +86,7 @@
 | Project | What I Built | Tech & Result |
 | --- | --- | --- |
 | [**AION**](https://github.com/Lineon24/AION-NIDS-Service) | 5초 단위 통계 트래픽과 직접 설계한 41개 특징으로 네트워크 공격을 탐지하는 시스템 | `Python` `FastAPI` `XGBoost` `Pandas` · 자체 테스트셋 정확도 100% |
-| [**여신 Yeoshin**](https://github.com/Lineon24/Yeoshin-ai-concierg) | 6인 팀에서 메인·병원 Agent, 병원별 RAG MCP·리뷰 조회 도구 개발, 응답 처리 단계 축소와 상담 승인 흐름 개선 | `Python` `LangGraph` `FastMCP` `pgvector` · [시연 영상](https://www.youtube.com/watch?v=Jh-rIKw4PNs) |
+| [**여신 Yeoshin**](https://github.com/Lineon24/Yeoshin-ai-concierg) | 메인·병원 Agent 개발과 웹 채팅 연결, 병원별 RAG·리뷰 조회 도구, 응답·승인 흐름 개선 및 로고·파비콘 제작 | `Python` `LangGraph` `FastMCP` `pgvector` · [시연 영상](https://www.youtube.com/watch?v=Jh-rIKw4PNs) |
 | [**피티스푼**](https://github.com/Lineon24/PTspoon) | 서비스 DB의 식당 후보를 답변 근거로 제공하는 2단계 AI 파이프라인과 맛집 커뮤니티 | `Next.js` `TypeScript` `Supabase` `OpenAI` `Redis` |
 | [**StoryWeaver AI**](https://github.com/Lineon24/StoryWeaver) | 캐릭터·세계관·관계·이전 장면을 조회하는 6개 Tool과 작가·검수 Agent를 연결한 대본 생성 서비스 | `LangChain` `Next.js` `TypeScript` `Python` `Zod` `Pydantic` · [Live Demo](https://storyweaver-ten.vercel.app) |
 | [**ReviQ**](https://github.com/Lineon24/ReviQ) | 팀 프로젝트에서 맡은 AI를 웹으로 단독 확장, 3-Agent 보고서 생성과 보고서 기반 후속 채팅 분리 | `Python` `FastAPI` `CrewAI` `Next.js` `IndexedDB` |
@@ -103,14 +103,19 @@
 - API 키 원문을 DB에 저장하지 않고 서버에서 재계산해 검증하는 인증 구조를 설계했습니다. 팀원이 개발한 웹·분석기와 연동해 탐지 이력과 시각화로 연결했습니다.
 - 자체 구축 데이터의 테스트셋 6,095건에서 정확도 100%를 기록했습니다. 이는 해당 테스트셋 결과이며 실제 운영 환경 전체의 탐지 성능을 보장하지 않습니다.
 
-### 여신 Yeoshin — 병원별 RAG와 다국어 상담 Agent
+### 여신 Yeoshin — 메인·병원 Agent 개발과 병원별 RAG
 
-2026.10, 외국인 환자의 모국어 상담부터 병원 탐색·예약까지 연결한 6인 팀 프로젝트입니다. 전체 Agent 아키텍처 설계에 참여하고 메인·병원 Agent와 병원별 RAG MCP를 개발했습니다.
+2026.10, 외국인 환자의 모국어 상담부터 병원 탐색·예약까지 연결한 6인 팀 프로젝트입니다. 전체 Agent 아키텍처 설계에 참여하고, **메인 Agent·병원 Agent 개발과 병원별 RAG MCP 구현**을 담당했습니다.
 
-- **병원별 RAG:** 상담방의 `hospital_id`를 도구 호출과 검색 SQL에 적용해 현재 병원·공통 문서만 검색하도록 설계했습니다. 문서 청킹·임베딩·pgvector 검색과 변경 문서 재색인을 구현했습니다.
-- **메인 Agent:** 9개 상담 주제와 기존 조건을 유지하고, 사용자의 병원 탐색 요청에 따라 흐름을 전환합니다. 실제 DB에서 조회한 유사 시술 후보를 제시하고 사용자 선택 후 검색을 이어가도록 했습니다.
+- **병원 Agent 개발·웹 채팅 연결:** LangChain·LangGraph 기반 병원 상담 Agent를 개발하고 Business MCP·RAG MCP를 연결했습니다. 병원·의사·가격·예약 가능 시간을 조회하고 부족한 예약 조건을 다시 묻게 했으며, RabbitMQ 요청 → 병원 그래프 → SSE 응답을 연결해 대화별 상태·중복 작업·타임아웃을 처리했습니다.
+- **병원별 RAG 설계·구현:** 상담방의 `hospital_id`를 도구 호출과 검색 SQL에 적용해 현재 병원·공통 문서만 검색하도록 설계했습니다. 문서 청킹·임베딩·pgvector 검색, 변경 없는 문서의 재임베딩 생략, 검색·색인 계정 분리를 구현했습니다. 가상 병원 50곳의 FAQ 750문항을 생성하고 원본 정책과 대조하는 코드도 작성했습니다.
+- **메인 Agent·상담 흐름:** 9개 상담 주제와 기존 조건을 유지하고, 사용자 의도에 따라 정보 상담에서 병원 탐색으로 전환하도록 설계했습니다. 외부 시술 검색 AI를 연결해 완료 여부·출처·실패를 확인하고, 실제 DB의 유사 시술 후보를 사용자 선택 후 검색에 반영했습니다. 검색 결과가 0건이면 조건 변경이나 다른 정보 탐색을 제안하도록 했습니다.
 - **응답 성능:** 프롬프트를 축약하고 별도 답변 검토 AI·불필요한 `verify` 노드를 제거했습니다. 정해진 첫 질문은 모델 호출 없이 처리해 추가 처리 단계를 줄였습니다.
-- **업무 연동:** Business MCP의 병원 리뷰 조회를 확장하고, 상담 요약 승인 폼·재진입 복원과 예약 날짜·가격 검증을 보완했습니다.
+- **병원 리뷰 조회·다국어 답변:** Business MCP의 리뷰 조회 도구를 Backend 내부 API와 연결했습니다. 언어 필터·페이지 조회를 지원하고 리뷰 ID·작성일·전체 건수를 보존했으며, 실제 채팅에서 한국어·영어 안내를 확인했습니다.
+- **상담 승인·예약 조건 검증:** 팀의 요약·승인 실행 구조에 상담 요약·공유 동의 카드를 연결하고, 필드 형식·한국어 처리와 재진입 시 승인 화면 복원을 보완했습니다. 모호한 날짜·복수 가격 옵션을 다시 확인하고 조회 요청과 슬롯의 날짜·시간·의사를 대조했으며, 메인→병원 인계 조건·요약을 확인하는 로그를 추가했습니다.
+- **서비스 로고·파비콘 제작:** ‘여신’의 Y와 새싹을 결합한 로고를 디자인하고 SVG·ICO 파비콘(16·32·48px)을 제작했습니다. 고객 홈·직원 화면과 브라우저 탭에 적용했습니다.
+
+구현 기록: [병원 Agent·RAG #23](https://github.com/skala-group-1/skala-team1-capstone/pull/23) · [상담 승인 #42](https://github.com/skala-group-1/skala-team1-capstone/pull/42) · [리뷰 조회 #46](https://github.com/skala-group-1/skala-team1-capstone/pull/46) · [예약 검증 #51](https://github.com/skala-group-1/skala-team1-capstone/pull/51) · [메인 상담 #70](https://github.com/skala-group-1/skala-team1-capstone/pull/70) · [로고·파비콘 #92](https://github.com/skala-group-1/skala-team1-capstone/pull/92)
 
 [팀 저장소·기여 기록](https://github.com/skala-group-1/skala-team1-capstone#team) · [아키텍처](https://github.com/skala-group-1/skala-team1-capstone#architecture) · [주요 화면](https://github.com/skala-group-1/skala-team1-capstone#features) · [전체 데모](https://www.youtube.com/watch?v=Jh-rIKw4PNs)
 
